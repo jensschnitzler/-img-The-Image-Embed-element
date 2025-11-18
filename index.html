@@ -2,89 +2,136 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><img>: The Image Embed element</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title><img>: The Image Embed element</title>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="assets/css/reset.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+	<!-- CSS -->
+	<link rel="stylesheet" href="assets/css/reset.css">
+	<link rel="stylesheet" href="assets/css/prism.css">
+	<link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
 
-    <header>
-        <h1><code>&lt;img&gt;</code>: The Image Embed element</h1>
-        <p>A <strong>semantically perfect</strong>, <strong>HTML-valid</strong>, <strong>fully accessible</strong> <code><img></code> tag depends on the kind of image you are embedding. But there is a gold-standard pattern.</p>
-        <p>Below are the correct versions for each scenario, including explanations.</p>
-    </header>
+	<header>
+		<h1><code>&lt;img&gt;</code>: The Image Embed element</h1>
+		<p>A <strong>semantically perfect</strong>, <strong>HTML-valid</strong>, <strong>fully accessible</strong> <code>&lt;img&gt;</code> tag depends on the kind of image you are embedding.</p>
+		
+		<p>Factors that have to be determined individually on a case-by-case basis:</p>
+		<ul>
+			<li><p><strong>Informative</strong> or <strong>Decorative</strong></p></li>
+			<li><p><strong>Critical (above the fold)</strong> or <strong>Lazy</strong></p></li>
+			<li><p><strong>Native Lazy Loading</strong> or <strong>JS Lazy Loading</strong></p></li>
+		</ul>
+		
+		<p>Below are versions for different scenarios.</p>
+	</header>
 
-    <main>
+	<main>
 
-        <section>
-            <h2>Informative Image</h2>
+		<section>
+			<h2>Informative Image</h2>
 
-            <pre>
-                <code>&lt;img src="assets/img/bird-robin-cute-animals-940f8d.jpg" alt="A red robin" width="864" height="1024" decoding="async" loading="lazy" fetchpriority="low"&gt;</code>
-            </pre>
+			<pre><code class="language-html">&lt;img src="assets/img/bird-robin-cute-animals-940f8d.jpg" alt="A red robin" width="864" height="1024" decoding="async" loading="lazy" fetchpriority="low"&gt;</code></pre>
+			
+			<figure>
+				<img src="assets/img/bird-robin-cute-animals-940f8d.jpg" alt="A red robin" width="864" height="1024" decoding="async" loading="lazy" fetchpriority="low">
+			</figure>
 
-            <img src="assets/img/bird-robin-cute-animals-940f8d.jpg" alt="A red robin" width="864" height="1024"
-                decoding="async" loading="lazy" fetchpriority="low">
+			<p>Why this is perfect:</p>
+			<ul>
+				<li>
+					<p><strong>alt</strong>: Describes the image meaningfully.</p>
+				</li>
+				<li>
+					<p><strong>width/height</strong>: Prevents layout shift (CLS).</p>
+				</li>
+				<li>
+					<p><strong>decoding="async"</strong>: Allows the browser to decode without blocking.</p>
+				</li>
+				<li>
+					<p><strong>loading="lazy"</strong>: Improves performance when image is off-screen.</p>
+				</li>
+				<li>
+					<p><strong>fetchpriority="low"</strong>: Helps browser prioritize more important resources (optional).</p>
+				</li>
+				<li>
+					<p><strong>No role attribute</strong>: Not needed for meaningful images.</p>
+				</li>
+			</ul>
+		</section>
 
-            <p>Why this is perfect:</p>
-            <ul>
-                <li>
-                    <p><strong>alt</strong>: Describes the image meaningfully.</p>
-                </li>
-                <li>
-                    <p><strong>width/height</strong>: Prevents layout shift (CLS).</p>
-                </li>
-                <li>
-                    <p><strong>decoding="async"</strong>: Allows the browser to decode without blocking.</p>
-                </li>
-                <li>
-                    <p><strong>loading="lazy"</strong>: Improves performance when image is off-screen.</p>
-                </li>
-                <li>
-                    <p><strong>fetchpriority="low"</strong>: Helps browser prioritize more important resources (optional).</p>
-                </li>
-                <li>
-                    <p><strong>No role attribute</strong>: Not needed for meaningful images.</p>
-                </li>
-            </ul>
-        </section>
+		<section>
+			<h2>Decorative Image</h2>
 
-        <section>
-            <h2>Decorative Image</h2>
+			<pre><code class="language-html">&lt;img src="assets/img/bird-robin-cute-animals-940f8d.jpg" alt="" role="presentation" width="300" height="300" decoding="async" loading="lazy" fetchpriority="low"&gt;</code></pre>
+			
+			<figure>
+				<img src="assets/img/bird-robin-cute-animals-940f8d.jpg" alt="" role="presentation" width="300" height="300" decoding="async" loading="lazy" fetchpriority="low">
+			</figure>
 
-            <pre>
-                <code>&lt;img src="assets/img/bird-robin-cute-animals-940f8d.jpg" alt="" role="presentation" width="300" height="300" decoding="async" loading="lazy" fetchpriority="low"&gt;</code>
-            </pre>
-            
-            <img src="assets/img/bird-robin-cute-animals-940f8d.jpg" alt="" role="presentation" width="300" height="300" decoding="async" loading="lazy" fetchpriority="low">            
+			<p>Why:</p>
+			<ul>
+				<li>
+					<p><strong>alt=""</strong> hides it from screen readers.</p>
+				</li>
+				<li>
+					<p><strong>role="presentation"</strong> reinforces this (optional but recommended)</p>
+				</li>
+			</ul>
+		</section>
+		
+		<section>
+			<h2>Optional but recommended attributes</h2>
+			
+			<p>These enhance performance but are not mandatory for accessibility:</p>
+			
+			<ul>
+				<li><p><code>srcset</code> + <code>sizes</code>: responsive images</p></li>
+				<li><p><code>loading="lazy"</code>: non-critical images only</p></li>
+				<li><p><code>decoding="async"</code>: safe for nearly all images</p></li>
+				<li><p><code>fetchpriority="high"</code>: for above-the-fold hero image</p></li>
+			</ul>
+		
+			<pre><code class="language-html">&lt;img src="assets/img/bird-robin-cute-animals-940f8d.jpg" srcset="hero-small.jpg 600w, hero-medium.jpg 1200w, hero-large.jpg 1800w" sizes="100vw" alt="A red robin" width="864" height="1024"&gt;</code></pre>
+			
+			<figure>
+				<img src="assets/img/bird-robin-cute-animals-940f8d.jpg" srcset="hero-small.jpg 600w, hero-medium.jpg 1200w, hero-large.jpg 1800w" sizes="100vw" alt="A red robin" width="864" height="1024">
+			</figure>
+			
+			<h3>SRCSET</h3>
+			
+			<pre><code class="language-html">srcset="hero-small.jpg 600w, hero-medium.jpg 1200w, hero-large.jpg 1800w"</code></pre>
+			
+			<p><i>I left out everything in regard to pixel density, because it is incorrect to mix width descriptors and pixel density descriptors in the same <code>srcset</code> attribute.</i></p>
+			
+			<p>The <code>srcset</code> value contains one or more strings separated by commas, indicating possible image sources for the <a href="/en-US/docs/Glossary/User_agent">user agent</a> to use.</p>
+			<p>Each string is composed of:</p>
+			<ol>
+				<li>A <a href="/en-US/docs/Glossary/URL">URL</a> to an image</li>
+				<li>A width descriptor (a positive integer directly followed by <code>w</code>). It <em>must</em> match the intrinsic width of the referenced image.<br><br>The width descriptor is divided by the source size given in the <code>sizes</code> attribute to calculate the effective pixel density. For example, to provide an image resource to be used when the renderer needs a 450 pixel wide image, use the width descriptor <code>450w</code>. When a <code>srcset</code> contains "w" descriptors, the browser uses those descriptors together with the <code>sizes</code> attribute to pick a resource.</li>
+			</ol>
+			<!--<p>If no descriptor is specified, the source is assigned the default descriptor of <code>1x</code>. It is incorrect to mix width descriptors and pixel density descriptors in the same <code>srcset</code> attribute. Duplicate descriptors (for instance, two sources in the same <code>srcset</code> which are both described with <code>2x</code>) are also invalid.</p>-->
+			<!--<p>Space characters, other than the whitespace separating the URL and the corresponding condition descriptor, are ignored; this includes both leading and trailing space, as well as space before or after each comma. However, if an image candidate string contains no descriptors and no whitespace after the URL, the following image candidate string, if there is one, must begin with one or more whitespace, or the comma will be considered part of the URL.</p>-->
+			<p><!--When the <code>&lt;img&gt;</code> element's <code>srcset</code> uses <code>x</code> descriptors, browsers also consider the URL in the <code>src</code> attribute (if present) as a candidate, and assign it a default descriptor of <code>1x</code>. On the other hand, -->[...] if the <code>srcset</code> attribute uses width descriptors, <code>src</code> is not considered, and the <code>sizes</code> attribute is used instead.</p>
+			<p>The user agent selects any of the available sources at its discretion. This provides them with significant leeway to tailor their selection based on things like user preferences or <a href="/en-US/docs/Glossary/Bandwidth">bandwidth</a> conditions.</p>
+			
+		</section>
 
-            <p>Why:</p>
-            <ul>
-                <li>
-                    <p><strong>alt=""</strong> hides it from screen readers.</p>
-                </li>
-                <li>
-                    <p><strong>role="presentation"</strong> reinforces this (optional but recommended)</p>
-                </li>
-            </ul>
-        </section>
+	</main>
 
-    </main>
-
-    <footer>
-        <p>Sources:</p>
-        <ul>
-            <li><a
-                    href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img#loading">https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img#loading</a>
-            </li>
-        </ul>
-    </footer>
-
+	<footer>
+		<p>Sources:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img">https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img</a>
+			</li>
+			<li><a href="https://chatgpt.com/share/691c749a-b1a0-800d-9a4b-583b3ddf03fa">https://chatgpt.com/share/691c749a-b1a0-800d-9a4b-583b3ddf03fa</a>
+			</li>
+		</ul>
+	</footer>
+	
+	<script src="assets/js/prism.js"></script>
 </body>
 
 </html>
