@@ -1,0 +1,37 @@
+/* reset.css — minimal reset */
+
+/* Box sizing */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Remove default margin */
+body, h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd {
+    margin: 0;
+}
+
+/* Remove list styles */
+ul[role='list'], ol[role='list'] {
+    list-style: none;
+}
+
+/* Basic body defaults */
+body {
+    min-height: 100vh;
+    text-rendering: optimizeLegibility;
+    line-height: 1.5;
+}
+
+/* Smooth scrolling */
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+/* Remove animations for people who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+}
