@@ -16,17 +16,46 @@
     <header></header>
 
     <main>
-        <p>
-        </p>
+        <p>A <strong>semantically perfect</strong>, <strong>HTML-valid</strong>, <strong>fully accessible</strong> <code><img></code> tag depends on the kind of image you are embedding. But there is a gold-standard pattern.</p>
 
-        <img src="photo.jpg" alt="A red mountain bike leaning against a brick wall" width="800" height="600" decoding="async" loading="lazy" fetchpriority="low">
+        <img src="assets/img/bird-robin-cute-animals-940f8d.jpg" alt="A red robin" width="864" height="1024"
+            decoding="async" loading="lazy" fetchpriority="low">
+
+        <pre>
+            <code>&lt;img src="assets/img/bird-robin-cute-animals-940f8d.jpg" alt="A red robin" width="864" height="1024" decoding="async" loading="lazy" fetchpriority="low"&gt;</code>
+        </pre>
+
+        <p>Why this is perfect:</p>
+        <ul>
+            <li>
+                <p><strong>alt</strong>: Describes the image meaningfully.</p>
+            </li>
+            <li>
+                <p><strong>width/height</strong>: Prevents layout shift (CLS).</p>
+            </li>
+            <li>
+                <p><strong>decoding="async"</strong>: Allows the browser to decode without blocking.</p>
+            </li>
+            <li>
+                <p><strong>loading="lazy"</strong>: Improves performance when image is off-screen.</p>
+            </li>
+            <li>
+                <p><strong>fetchpriority="low"</strong>: Helps browser prioritize more important resources (optional).
+                </p>
+            </li>
+            <li>
+                <p><strong>No role attribute</strong>: Not needed for meaningful images.</p>
+            </li>
+        </ul>
 
     </main>
 
     <footer>
         <p>Sources:</p>
         <ul>
-            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img#loading">https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img#loading</a></li>
+            <li><a
+                    href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img#loading">https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img#loading</a>
+            </li>
         </ul>
     </footer>
 
