@@ -23,6 +23,7 @@
 			<li><p><strong>Informative</strong> or <strong>Decorative</strong></p></li>
 			<li><p><strong>Critical (above the fold)</strong> or <strong>Lazy</strong></p></li>
 			<li><p><strong>Native Lazy Loading</strong> or <strong>JS Lazy Loading</strong></p></li>
+			<li><p>How large is the image displayed? <strong>Full-width hero</strong> or <strong>small thumbnail</strong></p></li>
 		</ul>
 		
 		<p>Below are versions for different scenarios.</p>
@@ -33,10 +34,10 @@
 		<section>
 			<h2>Informative Image</h2>
 
-			<pre><code class="language-html">&lt;img src="assets/img/bird-robin-cute-animals-940f8d.jpg" alt="A red robin" width="864" height="1024" decoding="async" loading="lazy" fetchpriority="low"&gt;</code></pre>
+			<pre><code class="language-html">&lt;img src="robin-320w.jpg" alt="A red robin" width="320" height="320" decoding="async" loading="lazy" fetchpriority="low"&gt;</code></pre>
 			
 			<figure>
-				<img src="assets/img/bird-robin-cute-animals-940f8d.jpg" alt="A red robin" width="864" height="1024" decoding="async" loading="lazy" fetchpriority="low">
+				<img src="assets/img/robin-320w.jpg" alt="A red robin" width="320" height="320" decoding="async" loading="lazy" fetchpriority="low">
 			</figure>
 
 			<p>Why this is perfect:</p>
@@ -65,10 +66,10 @@
 		<section>
 			<h2>Decorative Image</h2>
 
-			<pre><code class="language-html">&lt;img src="assets/img/bird-robin-cute-animals-940f8d.jpg" alt="" role="presentation" width="300" height="300" decoding="async" loading="lazy" fetchpriority="low"&gt;</code></pre>
+			<pre><code class="language-html">&lt;img src="robin-320w.jpg" alt="" role="presentation" width="320" height="320" decoding="async" loading="lazy" fetchpriority="low"&gt;</code></pre>
 			
 			<figure>
-				<img src="assets/img/bird-robin-cute-animals-940f8d.jpg" alt="" role="presentation" width="300" height="300" decoding="async" loading="lazy" fetchpriority="low">
+				<img src="assets/img/robin-320w.jpg" alt="" role="presentation" width="320" height="320" decoding="async" loading="lazy" fetchpriority="low">
 			</figure>
 
 			<p>Why:</p>
@@ -94,17 +95,13 @@
 				<li><p><code>fetchpriority="high"</code>: for above-the-fold hero image</p></li>
 			</ul>
 		
-			<pre><code class="language-html">&lt;img src="assets/img/bird-robin-cute-animals-940f8d.jpg" srcset="hero-small.jpg 600w, hero-medium.jpg 1200w, hero-large.jpg 1800w" sizes="100vw" alt="A red robin" width="864" height="1024"&gt;</code></pre>
-			
-			<figure>
-				<img src="assets/img/bird-robin-cute-animals-940f8d.jpg" srcset="hero-small.jpg 600w, hero-medium.jpg 1200w, hero-large.jpg 1800w" sizes="100vw" alt="A red robin" width="864" height="1024">
-			</figure>
+			<pre><code class="language-html">&lt;img src="robin-320w.jpg" srcset="robin-320w.jpg 320w, robin-640w.jpg 640w" sizes="auto, 100vw" alt="A red robin" width="640" height="640"&gt;</code></pre>
 			
 			<h3>SRCSET</h3>
 			
-			<pre><code class="language-html">srcset="hero-small.jpg 600w, hero-medium.jpg 1200w, hero-large.jpg 1800w"</code></pre>
+			<pre><code class="language-html">srcset="robin-320w.jpg 320w, robin-640w.jpg 640w"</code></pre>
 			
-			<p><i>I left out everything in regard to pixel density, because it is incorrect to mix width descriptors and pixel density descriptors in the same <code>srcset</code> attribute.</i></p>
+			<p><i>I left out everything in regard to pixel density, because it is incorrect to mix width descriptors and pixel density descriptors in the same <code>srcset</code> attribute. The width descriptor <code>w</code> syntax is more flexible, that's why we prefer it.</i></p>
 			
 			<p>The <code>srcset</code> value contains one or more strings separated by commas, indicating possible image sources for the <a href="/en-US/docs/Glossary/User_agent">user agent</a> to use.</p>
 			<p>Each string is composed of:</p>
@@ -117,6 +114,135 @@
 			<p><!--When the <code>&lt;img&gt;</code> element's <code>srcset</code> uses <code>x</code> descriptors, browsers also consider the URL in the <code>src</code> attribute (if present) as a candidate, and assign it a default descriptor of <code>1x</code>. On the other hand, -->[...] if the <code>srcset</code> attribute uses width descriptors, <code>src</code> is not considered, and the <code>sizes</code> attribute is used instead.</p>
 			<p>The user agent selects any of the available sources at its discretion. This provides them with significant leeway to tailor their selection based on things like user preferences or <a href="/en-US/docs/Glossary/Bandwidth">bandwidth</a> conditions.</p>
 			
+			<h4>How many different image widths should I ideally reference in a srcset atribute?</h4>
+			
+			<p>You do not need (and should not use) dozens of variants. That is outdated. The ideal is 3–5 image widths that cover real breakpoints and device classes.</p>
+			<p>This gives: excellent browser choices, efficient caching, minimal storage use, simpler templates</p>
+			<p>3–5 sizes is optimal, because modern browsers choose an image based on:</p>
+			<ul>
+				<li>viewport width</li>
+				<li>pixel density (1x, 2x, 3x)</li>
+				<li>the sizes attribute</li>
+			</ul>
+			<p>Browsers are smart: if your <code>sizes</code> attribute is correct, they only need a handful of options to make good decisions.</p>
+			
+			<h3>SIZES</h3>
+			
+			<p>How does the <code>sizes</code> attribute work? What does it do? What's an ideal setup? Which sizes attribute value should I use, if I just don't know in advance, how large the image is going to be displayed?</p>
+			
+			<p>Short answer: Use <code>sizes="auto, 100vw"</code>.</p>
+			
+			<p>Long answer: Check out <a href="https://chatgpt.com/g/g-p-68f0f724253c8191bd0838f6d185b734-web-development/c/691b0abc-b714-832e-b3e5-f3abc97e2f78" target="_blank" rel="noopener norefferrer">ChatGTPs full answer</a>.</p>
+
+			<h3>Practical Use Cases with SRCSET and SIZES</h3>
+			
+			<p>Let's assume that generally we have to deal with three different layout variants of images:</p>
+			<ul>
+				<li>Small: A thumbnail image in a grid of teasers.</li>
+				<li>Medium: A content image in an article.</li>
+				<li>Large: A full-width image.</li>
+			</ul>
+			<p>They might all be full-width on small screens, but what we care for is the maximum width on large screens.</p>
+			<p>For our specific scenario we say these are the maximum widths:</p>
+			<ul>
+				<li>Small: 400px</li>
+				<li>Medium: 1000px</li>
+				<li>Large: 3000px (debatable as theoretically the max-width is ∞, but practically we should look at the resolution of common large screens, f.e. at <a href="https://screensiz.es/">https://screensiz.es/</a>)</li>
+			</ul>
+			
+			<h4>Recommended image widths for SRCSET</h4>
+			
+			<p>For screens with higher pixel density we provide images that are wider than the maximum width:</p>
+			
+			<h5>Small → Use 2 widths</h5>
+			<ul>
+				<li>320w</li>
+				<li>640w</li>
+			</ul>
+			
+			<h5>Medium → Use 4 widths</h5>
+			<ul>
+				<li>320w</li>
+				<li>640w</li>
+				<li>960w</li>
+				<li>1440w</li>
+			</ul>
+			
+			<h5>Large → Use 7 widths</h5>
+			<ul>
+				<li>320w</li>
+				<li>640w</li>
+				<li>960w</li>
+				<li>1440w</li>
+				<li>1720w</li>
+				<li>2560w</li>
+				<li>3000w</li>
+			</ul>
+			
+			<h4>The resulting image tags</h4>
+			
+			<h5>Small</h5>
+			
+			<figure class="small">
+				<img loading="lazy" width="640" height="640"
+				sizes="auto, 100vw"
+				srcset="assets/img/robin-320w.jpg 320w, assets/img/robin-640w.jpg 640w"
+				src="robin-640w.jpg" alt="A red robin">
+			</figure>
+			
+			<pre><code class="language-html">&lt;img loading="lazy" width="640" height="640"
+sizes="auto, 100vw"
+srcset="robin-320w.jpg 320w, robin-640w.jpg 640w"
+src="robin-640w.jpg" alt="A red robin"&gt;</code></pre>
+
+			<p><code>sizes="auto, 100vw"</code> should work fine here, because the browser cannot pick an image larger than <code>640w</code>.</p>
+			
+			<h5>Medium</h5>
+			
+			<figure class="medium">
+				<img loading="lazy" width="1440" height="1440"
+				src="robin-640w.jpg"
+				sizes="auto, (max-width: 480px) 100vw, (max-width: 1280px) 50vw, 1000px"
+				srcset="assets/img/robin-320w.jpg 320w, assets/img/robin-640w.jpg 640w, assets/img/robin-960w.jpg 960w, assets/img/robin-1440w.jpg 1440w"
+				alt="A red robin">
+			</figure>
+			
+			<pre><code class="language-html">&lt;img loading="lazy" width="1440" height="1440"
+sizes="auto, (max-width: 480px) 100vw, (max-width: 1280px) 50vw, 1000px"
+srcset="robin-320w.jpg 320w, robin-640w.jpg 640w, robin-960w.jpg 960w, robin-1440w.jpg 1440w"
+src="robin-640w.jpg" alt="A red robin"&gt;</code></pre>
+
+			<p>Let's assume we have layout breakpoints at 480px and 1280px viewport width. We declare them in the <code>sizes</code> attribute and provide the corresponding <code>width</code> set in css. As a fallback (last value) we use the same value, which we've defined for <code>max-width</code> in css: <code>1000px</code>.</p>
+			
+			<h5>Large</h5>
+			
+			<figure class="large">
+				<img loading="lazy" width="3000" height="3000"
+				sizes="auto, 100vw"
+				srcset="assets/img/robin-320w.jpg 320w, assets/img/robin-640w.jpg 640w, assets/img/robin-960w.jpg 960w, assets/img/robin-1440w.jpg 1440w, assets/img/robin-1720w.jpg 1720w, assets/img/robin-2560w.jpg 2560w, assets/img/robin-3000w.jpg 3000w"
+				src="robin-640w.jpg" alt="A red robin"> 
+			</figure>
+			
+			<pre><code class="language-html">&lt;img loading="lazy" width="3000" height="3000"
+sizes="auto, 100vw"
+srcset="robin-320w.jpg 320w, robin-640w.jpg 640w, robin-960w.jpg 960w, robin-1440w.jpg 1440w, robin-1720w.jpg 1720w, robin-2560w.jpg 2560w, robin-3000w.jpg 3000w"
+src="robin-640w.jpg" alt="A red robin"&gt;</code></pre>
+
+			<p>For a full-width image <code>sizes="auto, 100vw"</code> is all we need.</p>
+			
+			<h5>Conclusion</h5>
+			
+			<p>Quite frankly, when we provide a layout-size-specific <code>srcset</code> (depending on the maximum image width), like we did above, <code>sizes="auto, 100vw"</code> probably works just good enough in all three cases.</p>
+			<p>Of course another way of approaching this, would be to give the same <code>srcset</code> value to all three kinds of images and provide different <code>sizes</code> values with more detailed instructions for the browser. But this way seems more complicated to me.</p>
+			<p>But what's the maximum image width in a layout, which scales with the viewport width?</p>
+			<p>In this case I'd just pragmatically assume that 3000px is the absolute ceiling of viewport width. So figure out what size the image has on a 3000px wide viewport. A calculation could look like this:</p>
+			
+			<ul>
+				<li>Large: 100vw: 3000px</li>
+				<li>Medium: 40vw 1200px</li>
+				<li>Small: 20vw: 600px</li>
+			</ul>
+			
 		</section>
 
 	</main>
@@ -127,6 +253,16 @@
 			<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img">https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img</a>
 			</li>
 			<li><a href="https://chatgpt.com/share/691c749a-b1a0-800d-9a4b-583b3ddf03fa">https://chatgpt.com/share/691c749a-b1a0-800d-9a4b-583b3ddf03fa</a>
+			</li>
+			<li><a href="https://ericportis.com/posts/2023/auto-sizes-pretty-much-requires-width-and-height/">https://ericportis.com/posts/2023/auto-sizes-pretty-much-requires-width-and-height/</a>
+			</li>
+			<li><a href="https://chriscoyier.net/2023/06/23/sizesauto-is-a-great-idea/">https://chriscoyier.net/2023/06/23/sizesauto-is-a-great-idea/</a>
+			</li>
+			<li><a href="https://chriscoyier.net/2023/06/23/sizesauto-is-a-great-idea/">https://chriscoyier.net/2023/06/23/sizesauto-is-a-great-idea/</a>
+			</li>
+			<li><a href="https://ausi.github.io/respimagelint/">https://ausi.github.io/respimagelint/</a>
+			</li>
+			<li><a href="https://github.com/mdn/content/issues/40902">https://github.com/mdn/content/issues/40902</a>
 			</li>
 		</ul>
 	</footer>
